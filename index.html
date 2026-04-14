@@ -1,63 +1,643 @@
 
-<h2 class="sr-only">정보처리기사 실기 키워드 찾기 130문제 퀴즈</h2>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정보처리기사 실기 키워드 130</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-sans)}
-#app{padding:1rem 0;max-width:720px;margin:0 auto}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px}
-.title{font-size:18px;font-weight:500;color:var(--color-text-primary)}
-.stat{font-size:13px;color:var(--color-text-secondary)}
-.progress-bar{width:100%;height:6px;background:var(--color-background-secondary);border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
-.progress-fill{height:100%;background:#1D9E75;border-radius:3px;transition:width 0.3s}
-.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
-.q-num{font-size:12px;color:var(--color-text-tertiary);margin-bottom:8px}
-.q-text{font-size:15px;color:var(--color-text-primary);line-height:1.6;margin-bottom:1rem}
-.hint-btn{font-size:12px;color:var(--color-text-secondary);background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 10px;cursor:pointer;margin-bottom:12px}
-.hint-btn:hover{background:var(--color-background-secondary)}
-.hint-text{font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;margin-bottom:12px;line-height:1.5;display:none}
-.input-row{display:flex;gap:8px;margin-bottom:10px}
-.ans-input{flex:1;padding:8px 12px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);outline:none}
-.ans-input:focus{border-color:var(--color-border-primary)}
-.check-btn{padding:8px 16px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;white-space:nowrap}
-.check-btn:hover{background:var(--color-background-secondary)}
-.result-box{font-size:14px;padding:10px 12px;border-radius:var(--border-radius-md);margin-bottom:8px;display:none}
-.result-box.correct{background:#EAF3DE;color:#27500A;border:0.5px solid #97C459}
-.result-box.wrong{background:#FCEBEB;color:#791F1F;border:0.5px solid #F09595}
-.answer-text{font-size:13px;color:var(--color-text-secondary);display:none;margin-top:6px}
-.nav-row{display:flex;gap:8px;justify-content:space-between;margin-top:1rem;flex-wrap:wrap}
-.nav-btn{padding:8px 18px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
-.nav-btn:hover{background:var(--color-background-secondary)}
-.nav-btn.primary{background:var(--color-background-secondary)}
-.mode-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
-.mode-btn{padding:6px 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer}
-.mode-btn.active{border-color:var(--color-border-primary);color:var(--color-text-primary);font-weight:500}
-.score-card{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.5rem;text-align:center;margin-bottom:1rem}
-.score-big{font-size:36px;font-weight:500;color:var(--color-text-primary)}
-.score-sub{font-size:14px;color:var(--color-text-secondary);margin-top:4px}
-.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px;background:var(--color-background-secondary);color:var(--color-text-secondary)}
-.reveal-btn{font-size:12px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0}
-</style>
+:root {
+  --bg: #0d0f14;
+  --surface: #161921;
+  --surface2: #1e222e;
+  --surface3: #252a38;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.14);
+  --text: #e8eaf0;
+  --text2: #8b91a8;
+  --text3: #555c72;
+  --accent: #4f8ef7;
+  --accent2: #7b5cf0;
+  --green: #34d399;
+  --red: #f87171;
+  --yellow: #fbbf24;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
 
-<div id="app">
-  <div class="header">
-    <div class="title">정보처리기사 실기 키워드 130</div>
-    <div class="stat" id="stat-txt">1 / 130</div>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* BG pattern */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 60% 40% at 20% 10%, rgba(79,142,247,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 80% 80%, rgba(123,92,240,0.07) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grid-pattern {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Header */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(79,142,247,0.2), rgba(123,92,240,0.2));
+  border: 1px solid rgba(79,142,247,0.3);
+  border-radius: 20px;
+  padding: 3px 10px 3px 6px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent);
+  width: fit-content;
+  margin-bottom: 6px;
+}
+
+.logo-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.logo h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+
+.logo p {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 300;
+}
+
+/* Stats row */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover { border-color: var(--border2); }
+
+.stat-num {
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-card:nth-child(1) .stat-num { color: var(--green); }
+.stat-card:nth-child(2) .stat-num { color: var(--red); }
+.stat-card:nth-child(3) .stat-num { color: var(--yellow); }
+
+.stat-label {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+/* Progress */
+.progress-wrap {
+  margin-bottom: 1.5rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progress-label {
+  font-size: 12px;
+  color: var(--text2);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.progress-pct {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.progress-track {
+  height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mode tabs */
+.mode-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text3);
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.mode-tab:hover { color: var(--text2); background: var(--surface3); }
+
+.mode-tab.active {
+  background: var(--surface3);
+  color: var(--text);
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px var(--border2);
+}
+
+/* Question card */
+.q-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.q-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.q-card.answered::before { opacity: 1; }
+.q-card.correct-state { border-color: rgba(52,211,153,0.3); }
+.q-card.wrong-state { border-color: rgba(248,113,113,0.25); }
+
+.q-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.q-number {
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+.q-tag {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.q-text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+}
+
+/* Hint */
+.hint-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text3);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.2s;
+}
+
+.hint-toggle:hover {
+  color: var(--accent);
+  border-color: rgba(79,142,247,0.3);
+}
+
+.hint-icon { font-size: 13px; }
+
+.hint-box {
+  display: none;
+  background: rgba(79,142,247,0.06);
+  border: 1px solid rgba(79,142,247,0.15);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+/* Input area */
+.input-area {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ans-input {
+  flex: 1;
+  padding: 11px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.ans-input::placeholder { color: var(--text3); }
+.ans-input:focus {
+  border-color: var(--accent);
+  background: var(--surface3);
+  box-shadow: 0 0 0 3px rgba(79,142,247,0.1);
+}
+
+.ans-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.check-btn {
+  padding: 11px 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.check-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+.check-btn:active { transform: translateY(0); }
+.check-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+/* Result */
+.result-area {
+  display: none;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.result-area.correct .result-header {
+  background: rgba(52,211,153,0.12);
+  color: var(--green);
+  border: 1px solid rgba(52,211,153,0.2);
+}
+
+.result-area.wrong .result-header {
+  background: rgba(248,113,113,0.08);
+  color: var(--red);
+  border: 1px solid rgba(248,113,113,0.15);
+}
+
+.result-answer {
+  display: none;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.result-answer-label {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.result-answer-text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* Nav */
+.nav-area {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.nav-btn {
+  padding: 11px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  font-size: 13px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-btn:hover { background: var(--surface2); color: var(--text); border-color: var(--border2); }
+
+.nav-btn.prev { justify-content: flex-start; }
+.nav-btn.next { justify-content: flex-end; }
+
+.skip-btn {
+  padding: 8px 14px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text3);
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.skip-btn:hover { color: var(--text2); border-color: var(--border2); }
+
+/* Footer tools */
+.footer-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.reset-btn {
+  padding: 7px 14px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text3);
+  font-size: 12px;
+  font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover { border-color: rgba(248,113,113,0.4); color: var(--red); }
+
+.footer-info {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Keyboard shortcut hints */
+.kbd-hints {
+  display: flex;
+  gap: 12px;
+  margin-top: 0.75rem;
+  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.kbd-hint {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--text3);
+}
+
+kbd {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text2);
+}
+
+/* Animations */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-card {
+  animation: slideIn 0.25s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.q-card.shake { animation: shake 0.35s ease-out; }
+
+/* Responsive */
+@media (max-width: 540px) {
+  .wrap { padding: 1.25rem 1rem 3rem; }
+  .app-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .stats-row { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .q-card { padding: 1.25rem; }
+  .mode-tab { font-size: 12px; padding: 7px 8px; }
+  .kbd-hints { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="grid-pattern"></div>
+
+<div class="wrap">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="logo">
+      <div class="logo-badge">정보처리기사 실기</div>
+      <h1>키워드 찾기 130문제</h1>
+      <p>핵심 키워드만 암기하면 쉽게 기억되는 퀴즈</p>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num" id="sc-correct">0</div>
+      <div class="stat-label">정답</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="sc-wrong">0</div>
+      <div class="stat-label">오답</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="sc-skip">0</div>
+      <div class="stat-label">건너뜀</div>
+    </div>
   </div>
-  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0.77%"></div></div>
-  <div class="mode-row">
-    <button class="mode-btn active" onclick="setMode('seq')">순서대로</button>
-    <button class="mode-btn" onclick="setMode('rand')">랜덤</button>
-    <button class="mode-btn" onclick="setMode('wrong')">틀린문제만</button>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-info">
+      <span class="progress-label" id="prog-label">1 / 130</span>
+      <span class="progress-pct" id="prog-pct">0.8%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="prog-fill" style="width:0.77%"></div>
+    </div>
   </div>
+
+  <!-- Mode tabs -->
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('seq', this)">순서대로</button>
+    <button class="mode-tab" onclick="setMode('rand', this)">랜덤</button>
+    <button class="mode-tab" onclick="setMode('wrong', this)">틀린문제만</button>
+  </div>
+
+  <!-- Question -->
   <div id="q-container"></div>
-  <div class="nav-row">
-    <button class="nav-btn" onclick="go(-1)">← 이전</button>
-    <button class="nav-btn" onclick="skipQ()">건너뛰기</button>
-    <button class="nav-btn primary" onclick="go(1)">다음 →</button>
+
+  <!-- Navigation -->
+  <div class="nav-area">
+    <button class="nav-btn prev" onclick="go(-1)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,18 9,12 15,6"/></svg>
+      이전
+    </button>
+    <button class="skip-btn" onclick="skipQ()">건너뛰기</button>
+    <button class="nav-btn next" onclick="go(1)">
+      다음
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg>
+    </button>
   </div>
-  <div style="margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-    <div style="font-size:13px;color:var(--color-text-secondary)">맞음 <strong id="sc-correct">0</strong> &nbsp; 틀림 <strong id="sc-wrong">0</strong> &nbsp; 건너뜀 <strong id="sc-skip">0</strong></div>
-    <button class="mode-btn" onclick="resetAll()">처음부터</button>
+
+  <!-- Keyboard hints -->
+  <div class="kbd-hints">
+    <div class="kbd-hint"><kbd>Enter</kbd> 정답 확인</div>
+    <div class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> 이전 / 다음</div>
+    <div class="kbd-hint"><kbd>H</kbd> 힌트</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer-tools">
+    <button class="reset-btn" onclick="resetAll()">↺ 처음부터</button>
+    <span class="footer-info" id="footer-info">문제를 풀어보세요</span>
   </div>
 </div>
 
@@ -67,7 +647,7 @@ const QS=[
 {q:"소프트웨어 공학에서 리팩토링(Refactoring)을 하는 목적에 대해 간략히 서술하시오.",a:"리팩토링의 목적은 프로그램을 쉽게 이해하고 수정하여 빠르게 개발할 수 있도록 하기 위함이다.",h:"코드 품질 개선, 가독성 향상"},
 {q:"요구사항 확인에서 ① 시스템이 무엇을 하는지, 어떤 기능을 하는지 사용자가 제공받기를 원하는 기능 요구사항과, ② 품질이나 제약사항과 관련된 요구사항(성능, 인터페이스, 보안 등)을 각각 무엇이라 하는가?",a:"① 기능 요구사항  ② 비기능 요구사항",h:"기능 vs 비기능"},
 {q:"UML 다이어그램 중 객체(Object)들을 추상화하여 표현하는 대표적인 구조적 다이어그램으로, 3개의 구획으로 나눠 이름, 속성, 메소드를 표기하는 것은?",a:"클래스(Class) 다이어그램",h:"이름/속성/메소드 3구획"},
-{q:"UML에서 ① 사물과 사물 사이의 연관성을 표현하는 것, ② UML에 표현되는 사물로 객체의 속성과 동작을 표현하는 것, ③ ②나 컴포넌트의 동작을 모아놓은 것으로 외부적으로 가시화되는 행동을 표현하며 단독 사용 없는 것을 각각 쓰시오.",a:"① 관계(Relationship)  ② 클래스(Class)  ③ 인터페이스(Interface)",h:"관계/클래스/인터페이스"},
+{q:"UML에서 ① 사물과 사물 사이의 연관성을 표현하는 것, ② UML에 표현되는 사물로 객체의 속성과 동작을 표현하는 것, ③ 외부적으로 가시화되는 행동을 표현하며 단독으로 사용되지 않는 것을 각각 쓰시오.",a:"① 관계(Relationship)  ② 클래스(Class)  ③ 인터페이스(Interface)",h:"관계/클래스/인터페이스"},
 {q:"UML 관계(Relationships) 중 ① 하나의 사물이 다른 사물에 포함되어 있는 관계로 전체와 부분으로 구분되며 서로 독립적인 관계와, ② 상위 모듈이 더 일반적이고 하위 모듈이 더 구체적인 개념을 가지는 관계를 각각 영문으로 쓰시오.",a:"① Aggregation  ② Generalization",h:"집합/일반화"},
 {q:"UML을 이용한 다이어그램 중 패키지 간의 import 관계 등을 표현하는 다이어그램을 쓰시오.",a:"패키지 다이어그램(Package Diagram)",h:"패키지 묶음 표현"},
 {q:"LOC 기법에 의하여 예측된 총 라인 수가 30,000라인, 개발에 참여할 프로그래머가 5명, 프로그래머들의 평균 생산성이 월간 300라인일 때 개발에 소요되는 기간을 계산식과 함께 쓰시오.",a:"계산식: (30,000/300)/5 = 20  답: 20개월",h:"(LOC/생산성)/인원"},
@@ -76,8 +656,7 @@ const QS=[
 {q:"데이터베이스 구축까지의 과정을 나열하시오. 요구 분석 → ( ) → ( ) → ( ) → 구현",a:"개념적 설계, 논리적 설계, 물리적 설계",h:"개념→논리→물리"},
 {q:"데이터 모델의 구성 요소 중 ① 데이터베이스에 저장된 실제 데이터를 처리하는 작업에 대한 명세로 데이터베이스를 조작하는 기본 도구, ② 논리적으로 표현된 객체 타입들 간의 관계로 데이터의 구성 및 정적 성질을 표현하는 것을 각각 쓰시오.",a:"① 연산(Operation)  ② 구조(Structure)",h:"연산/구조"},
 {q:"다음 테이블에서 카디널리티(Cardinality)와 디그리(Degree)를 구하시오. [회원 테이블: ID, 이름, 거주지, 신청강의 - 5개 행]",a:"카디널리티(Cardinality): 5  디그리(Degree): 4",h:"카디널리티=행 수, 디그리=열 수"},
-{q:"E-R 다이어그램에서 ① 관계 집합, ② 관계 집합과 속성을 연결, ③ 개체 집합(키에 밑줄), ④ 관계 집합의 속성, ⑤ 개체 집합과 관계 집합을 연결하는 요소를 각각 기호(㉠~㉤)로 쓰시오.",a:"① ㉡  ② ㉢  ③ ㉠  ④ ㉣  ⑤ ㉤",h:"다이어그램 기호 매핑"},
-{q:"키(Key)에서 ① 슈퍼키가 만족하는 성질과 ② 후보키가 추가로 만족해야 하는 성질(부분집합 속성)을 각각 쓰시오.",a:"① 유일성(Unique)  ② 최소성(Minimality)",h:"유일성/최소성"},
+{q:"키(Key)에서 ① 슈퍼키가 만족하는 성질과 ② 후보키가 추가로 만족해야 하는 성질을 각각 쓰시오.",a:"① 유일성(Unique)  ② 최소성(Minimality)",h:"유일성/최소성"},
 {q:"관계대수에서 ① 합집합, ② 차집합, ③ 교차곱(CARTESIAN PRODUCT), ④ 프로젝트, ⑤ 조인의 기호를 각각 쓰시오.",a:"① ∪  ② −  ③ ×  ④ π  ⑤ ▷◁",h:"관계대수 기호 5가지"},
 {q:"릴레이션 A, B가 있을 때 릴레이션 B의 조건에 맞는 것들만 릴레이션 A에서 분리하여 프로젝션을 하는 관계대수 연산자의 기호를 쓰시오.",a:"÷",h:"나누기 연산"},
 {q:"원하는 정보가 무엇이라는 것만 정의하는 비절차적 특성을 지니며, 튜플 해석식과 도메인 해석식으로 구분되는 것을 쓰시오.",a:"관계해석(Relational Calculus)",h:"비절차적, 튜플/도메인"},
@@ -96,7 +675,7 @@ const QS=[
 {q:"웹 페이지의 기본 형식인 HTML의 문법이 각 웹 브라우저에서 상호 호환적이지 못하다는 문제와 SGML의 복잡함을 해결하기 위하여 개발된 마크업 언어로, 송수신 시스템 간에 전송되는 데이터의 구조를 정의하는 것을 쓰시오.",a:"XML(eXtensible Markup Language)",h:"확장 가능한 마크업 언어"},
 {q:"HTTP, HTTPS, SMTP 등을 사용하여 xml 기반의 메시지를 네트워크 상에서 교환하는 프로토콜로, envelope, 헤더(header), 바디(body) 등이 추가된 xml 문서를 쓰시오.",a:"SOAP(Simple Object Access Protocol)",h:"xml 기반 메시지 교환"},
 {q:"웹 서비스와 관련된 서식이나 프로토콜 등을 표준적인 방법으로 기술하고 게시하기 위한 언어로, XML로 작성되며 UDDI의 기초가 되는 것을 쓰시오.",a:"WSDL(Web Services Description Language)",h:"웹서비스 기술 언어"},
-{q:"럼바우(Rumbaugh) 데이터 모델링에서 ① 다수의 프로세스들 간의 자료 흐름을 중심으로 처리 과정을 표현한 모델링, ② 시간의 흐름에 따른 객체들 간의 제어 흐름 등 동적인 행위를 표현하는 모델링, ③ 시스템에서 요구되는 객체를 찾아 속성과 연산 식별 및 객체들 간 관계를 규정하는 모델링을 각각 쓰시오.",a:"① 기능(Function) 모델링  ② 동적(Dynamic) 모델링  ③ 객체(Object/Information) 모델링",h:"기능/동적/객체"},
+{q:"럼바우(Rumbaugh) 데이터 모델링에서 ① 다수의 프로세스들 간의 자료 흐름을 중심으로 처리 과정을 표현한 모델링, ② 시간의 흐름에 따른 객체들 간의 제어 흐름 등 동적인 행위를 표현하는 모델링, ③ 시스템에서 요구되는 객체를 찾아 속성과 연산 식별 및 객체들 간 관계를 규정하는 모델링을 각각 쓰시오.",a:"① 기능(Function) 모델링  ② 동적(Dynamic) 모델링  ③ 객체(Information) 모델링",h:"기능/동적/객체"},
 {q:"자신이 사용하지 않는 인터페이스와 의존 관계를 맺거나 영향을 받지 않아야 한다는 객체지향 설계 원칙(SOLID)을 쓰시오.",a:"ISP(Interface Segregation Principle, 인터페이스 분리 원칙)",h:"인터페이스 분리"},
 {q:"결합도(Coupling)의 종류 중 단순 처리 대상인 데이터만 전달되는 것이 아니라 어떻게 처리해야 하는지를 결정하는 제어 요소가 전달되는 경우의 결합도를 영문으로 쓰시오.",a:"Control Coupling",h:"제어 요소 전달"},
 {q:"결합도 종류 중 ① 모듈 간의 인터페이스로 데이터, 지역 변수 등을 직접 참조하거나 수정할 때의 결합도, ② 배열이나 레코드 등의 자료 구조가 전달될 때의 결합도, ③ 파라미터가 아닌 모듈 밖에 선언된 전역 변수를 사용하여 상호작용하는 때의 결합도를 각각 쓰시오.",a:"① 내용 결합도  ② 스탬프 결합도  ③ 공통 결합도",h:"내용/스탬프/공통"},
@@ -139,10 +718,10 @@ const QS=[
 {q:"데이터를 제어하는 DCL의 하나인 ROLLBACK에 대해 간략히 서술하시오.",a:"ROLLBACK은 트랜잭션이 실패한 경우 작업을 취소하고 이전 상태로 되돌리기 위한 명령어이다.",h:"작업 취소, 이전 상태 복귀"},
 {q:"데이터베이스 보안에서 가용성(Availability)에 대해 간략히 서술하시오.",a:"가용성은 인가받은 사용자는 시스템 내의 정보와 자원을 언제라도 사용할 수 있다는 보안 요건이다.",h:"인가받은 사용자 언제든 접근"},
 {q:"보안 위협의 하나인 SQL Injection에 대해 간략히 서술하시오.",a:"SQL Injection은 웹 응용 프로그램에 SQL 구문을 삽입하여 내부 데이터베이스(DB) 서버의 데이터를 유출 및 변조하고 관리자 인증을 우회하는 공격 기법이다.",h:"SQL 구문 삽입 공격"},
-{q:"암호화 알고리즘 중 ① 스위스의 라이(Lai)와 메시(Messey)가 1990년 PES를 발표하고 이후 개선한 IPES, 128비트 Key로 64비트 블록을 암호화하는 알고리즘의 현재 이름과, ② 국가 안전 보장국(NSA)에서 개발한 암호화 알고리즘으로 80비트 Key로 64비트 블록을 암호화하는 것을 각각 쓰시오.",a:"① IDEA(International Data Encryption Algorithm)  ② Skipjack",h:"IDEA/Skipjack"},
+{q:"암호화 알고리즘 중 ① 스위스의 라이(Lai)와 메시(Messey)가 개발, 128비트 Key로 64비트 블록을 암호화하는 알고리즘의 현재 이름과, ② 국가 안전 보장국(NSA)에서 개발한 암호화 알고리즘으로 80비트 Key로 64비트 블록을 암호화하는 것을 각각 쓰시오.",a:"① IDEA(International Data Encryption Algorithm)  ② Skipjack",h:"IDEA/Skipjack"},
 {q:"무선랜 보안에 사용된 WEP 방식을 보완한 데이터 보안 프로토콜로, 암호 알고리즘의 입력 키 길이를 128비트로 늘리고 패킷당 키 할당, 키값 재설정 등 키 관리 방식을 개선한 것을 영문 약어로 쓰시오.",a:"TKIP(Temporal Key Integrity Protocol)",h:"WEP 보완, 임시 키 무결성"},
 {q:"1974년 IBM이 개발하고 1975년 NBS에 의해 미국의 국가 표준으로 발표된 암호화 알고리즘으로, 블록 크기는 64비트, 키 길이는 56비트이며 16회의 라운드를 수행하는 것을 쓰시오.",a:"DES(Data Encryption Standard)",h:"64비트 블록, 56비트 키, 16라운드"},
-{q:"2001년 미국 표준 기술 연구소(NIST)에서 발표한 대칭키 암호화 알고리즘으로, DES의 한계를 느낀 NIST에서 공모한 후 발표하였으며 블록 크기는 128비트이며 키 길이에 따라 128, 192, 256으로 분류되는 것을 쓰시오.",a:"AES(Advanced Encryption Standard)",h:"128비트 블록, 키 128/192/256"},
+{q:"2001년 미국 표준 기술 연구소(NIST)에서 발표한 대칭키 암호화 알고리즘으로, 블록 크기는 128비트이며 키 길이에 따라 128, 192, 256으로 분류되는 것을 쓰시오.",a:"AES(Advanced Encryption Standard)",h:"128비트 블록, 키 128/192/256"},
 {q:"1991년 R.rivest가 MD4를 개선한 암호화 알고리즘으로, 512비트 입력 메시지 블록에 대해 차례로 동작하고 128비트 스테이트(state)의 값이 변하는 것을 쓰시오.",a:"MD5(Message Digest algorithm 5)",h:"512비트 입력, 128비트 출력"},
 {q:"보안 위협에서 ARP 스푸핑은 로컬 네트워크(LAN)에서 사용하는 ( ) 프로토콜의 취약점을 이용한 공격 기법으로, 자신의 물리적 주소(MAC)를 변조하여 다른 PC에게 도달해야 하는 데이터 패킷을 가로채거나 방해한다. 괄호에 들어갈 용어를 쓰시오.",a:"ARP(Address Resolution Protocol)",h:"MAC 주소 변조"},
 {q:"공격자가 패킷의 출발지 주소 또는 포트를 임의로 변경하여 송신측 IP 주소 또는 포트를 동일하게 함으로써 자신에게 응답을 수행하게 하여 무한히 응답하는 패킷을 계속 전송하여 서비스 거부 상태에 빠지도록 하는 공격 유형을 쓰시오.",a:"LAND Attack(Local Area Network Denial Attack)",h:"출발지=목적지 주소"},
@@ -193,152 +772,210 @@ const QS=[
 {q:"소프트웨어 ( )는 소프트웨어 개발 단계의 각 과정에서 만들어지는 프로그램, 문서, 데이터 등을 관리하는 것으로, 이를 지원하는 도구로 Git, SVN 등이 있다. 괄호에 들어갈 용어를 쓰시오.",a:"형상관리(SCM, Software Configuration Management)",h:"개발 산출물 버전 관리"}
 ];
 
-let mode='seq';
-let order=[...Array(QS.length).keys()];
-let wrongSet=new Set();
-let skippedSet=new Set();
-let correctCount=0;
-let wrongCount=0;
-let skipCount=0;
-let results={};
-let cur=0;
-let answered=false;
-let filteredOrder=[];
+let mode = 'seq';
+let filteredOrder = [];
+let cur = 0;
+let results = {};
+let wrongSet = new Set();
+let correctCount = 0, wrongCount = 0, skipCount = 0;
+let answered = false;
 
-function setMode(m){
-  mode=m;
-  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
-  event.target.classList.add('active');
+function buildOrder() {
+  if (mode === 'seq') {
+    filteredOrder = [...Array(QS.length).keys()];
+  } else if (mode === 'rand') {
+    filteredOrder = [...Array(QS.length).keys()];
+    for (let i = filteredOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [filteredOrder[i], filteredOrder[j]] = [filteredOrder[j], filteredOrder[i]];
+    }
+  } else {
+    filteredOrder = wrongSet.size > 0 ? [...wrongSet] : [...Array(QS.length).keys()];
+  }
+}
+
+function setMode(m, btn) {
+  mode = m;
+  document.querySelectorAll('.mode-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   buildOrder();
-  cur=0;
+  cur = 0;
   render();
 }
 
-function buildOrder(){
-  if(mode==='seq') filteredOrder=[...Array(QS.length).keys()];
-  else if(mode==='rand'){
-    filteredOrder=[...Array(QS.length).keys()];
-    for(let i=filteredOrder.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [filteredOrder[i],filteredOrder[j]]=[filteredOrder[j],filteredOrder[i]];
-    }
-  } else {
-    filteredOrder=wrongSet.size>0?[...wrongSet]:[...Array(QS.length).keys()];
-    if(filteredOrder.length===0) filteredOrder=[...Array(QS.length).keys()];
-  }
-}
+function currentIdx() { return filteredOrder[cur]; }
 
-function currentQIdx(){return filteredOrder[cur];}
+function render() {
+  const idx = currentIdx();
+  const q = QS[idx];
+  answered = !!results[idx];
 
-function render(){
-  if(filteredOrder.length===0) buildOrder();
-  const idx=currentQIdx();
-  const q=QS[idx];
-  answered=false;
-  const total=filteredOrder.length;
-  document.getElementById('stat-txt').textContent=`${cur+1} / ${total}`;
-  document.getElementById('prog').style.width=((cur+1)/total*100).toFixed(1)+'%';
+  const total = filteredOrder.length;
+  const pct = ((cur + 1) / total * 100).toFixed(1);
+  document.getElementById('prog-label').textContent = `${cur + 1} / ${total}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('sc-correct').textContent = correctCount;
+  document.getElementById('sc-wrong').textContent = wrongCount;
+  document.getElementById('sc-skip').textContent = skipCount;
 
-  const prevResult=results[idx];
-  
-  const html=`
-    <div class="q-card">
-      <div class="q-num">문제 ${idx+1}</div>
-      <div class="q-text">${q.q}</div>
-      <button class="hint-btn" onclick="toggleHint(this)">힌트 보기</button>
-      <div class="hint-text">${q.h}</div>
-      <div class="input-row">
-        <input class="ans-input" id="ans-inp" type="text" placeholder="답을 입력하세요..." onkeydown="if(event.key==='Enter')checkAns()">
-        <button class="check-btn" onclick="checkAns()">확인</button>
+  const prevResult = results[idx];
+  const isCorrect = prevResult === 'correct';
+
+  let cardClass = 'q-card';
+  if (prevResult === 'correct') cardClass += ' answered correct-state';
+  else if (prevResult === 'wrong') cardClass += ' answered wrong-state';
+
+  const ansLines = q.a.split('  ').map(l => `<div>${l}</div>`).join('');
+
+  document.getElementById('q-container').innerHTML = `
+    <div class="${cardClass}" id="q-card">
+      <div class="q-meta">
+        <span class="q-number">Q${(idx + 1).toString().padStart(3, '0')}</span>
+        ${prevResult ? `<span class="q-tag" style="color:${prevResult === 'correct' ? 'var(--green)' : 'var(--red)'}">${prevResult === 'correct' ? '✓ 정답' : '✗ 오답'}</span>` : '<span class="q-tag">미응답</span>'}
       </div>
-      <div class="result-box" id="res-box"></div>
-      <div class="answer-text" id="ans-txt"></div>
+      <div class="q-text">${q.q}</div>
+      <button class="hint-toggle" onclick="toggleHint(this)" id="hint-btn">
+        <span class="hint-icon">💡</span>힌트 보기
+      </button>
+      <div class="hint-box" id="hint-box">${q.h}</div>
+      <div class="input-area">
+        <input class="ans-input" id="ans-inp" type="text" placeholder="답을 입력하세요..." 
+          ${answered ? 'disabled' : ''} 
+          onkeydown="if(event.key==='Enter')checkAns()">
+        <button class="check-btn" onclick="checkAns()" ${answered ? 'disabled' : ''}>확인</button>
+      </div>
+      <div class="result-area ${prevResult || ''}" id="result-area" style="${prevResult ? 'display:block' : 'display:none'}">
+        <div class="result-header">
+          ${prevResult === 'correct' ? '✓ 정답입니다!' : prevResult === 'wrong' ? '✗ 틀렸습니다.' : ''}
+        </div>
+        <div class="result-answer" id="result-answer" style="display:${prevResult ? 'block' : 'none'}">
+          <div class="result-answer-label">정답</div>
+          <div class="result-answer-text">${ansLines}</div>
+        </div>
+      </div>
     </div>
   `;
-  document.getElementById('q-container').innerHTML=html;
-  
-  if(prevResult){
-    answered=true;
-    showResult(prevResult==='correct',q.a,true);
-    document.getElementById('ans-inp').value='';
+
+  updateFooter();
+  if (!answered) {
+    setTimeout(() => { const inp = document.getElementById('ans-inp'); if (inp) inp.focus(); }, 100);
   }
-  
-  updateScore();
-  setTimeout(()=>{const inp=document.getElementById('ans-inp');if(inp)inp.focus();},100);
 }
 
-function toggleHint(btn){
-  const ht=btn.nextElementSibling;
-  if(ht.style.display==='block'){ht.style.display='none';btn.textContent='힌트 보기';}
-  else{ht.style.display='block';btn.textContent='힌트 숨기기';}
+function toggleHint(btn) {
+  const box = document.getElementById('hint-box');
+  if (box.style.display === 'block') {
+    box.style.display = 'none';
+    btn.innerHTML = '<span class="hint-icon">💡</span>힌트 보기';
+  } else {
+    box.style.display = 'block';
+    btn.innerHTML = '<span class="hint-icon">💡</span>힌트 숨기기';
+  }
 }
 
-function normalize(s){return s.replace(/[\s\(\)\[\]]/g,'').toLowerCase().replace(/[①②③④⑤]/g,'');}
+function normalize(s) {
+  return s.replace(/[\s\(\)\[\]①②③④⑤\-]/g, '').toLowerCase();
+}
 
-function checkAns(){
-  if(answered) return;
-  const idx=currentQIdx();
-  const q=QS[idx];
-  const inp=document.getElementById('ans-inp');
-  const val=inp.value.trim();
-  if(!val) return;
-  
-  const correct=normalize(val).includes(normalize(q.a.split('  ')[0].replace(/[①②③④⑤]/g,'').trim())) 
-    || normalize(q.a).includes(normalize(val))
-    || normalize(val)===normalize(q.a.split('  ')[0]);
-    
-  answered=true;
-  if(correct){
-    results[idx]='correct';
+function checkAns() {
+  if (answered) return;
+  const idx = currentIdx();
+  const q = QS[idx];
+  const inp = document.getElementById('ans-inp');
+  const val = inp.value.trim();
+  if (!val) { inp.focus(); return; }
+
+  const normVal = normalize(val);
+  const normAns = normalize(q.a);
+  const firstPart = normalize(q.a.split('  ')[0]);
+
+  const correct = normAns.includes(normVal) || normVal.includes(firstPart) ||
+    normVal === normAns || normalize(val).length > 2 && normAns.includes(normVal);
+
+  answered = true;
+  inp.disabled = true;
+  document.querySelector('.check-btn').disabled = true;
+
+  if (correct) {
+    results[idx] = 'correct';
     wrongSet.delete(idx);
     correctCount++;
   } else {
-    results[idx]='wrong';
+    results[idx] = 'wrong';
     wrongSet.add(idx);
     wrongCount++;
   }
-  showResult(correct,q.a,false);
-  updateScore();
+
+  const card = document.getElementById('q-card');
+  if (!correct) {
+    card.classList.add('shake');
+    setTimeout(() => card.classList.remove('shake'), 400);
+  }
+
+  card.classList.add('answered');
+  card.classList.add(correct ? 'correct-state' : 'wrong-state');
+  card.classList.remove('correct-state'.split('-')[0]);
+
+  const ra = document.getElementById('result-area');
+  ra.className = 'result-area ' + (correct ? 'correct' : 'wrong');
+  ra.style.display = 'block';
+  ra.querySelector('.result-header').textContent = correct ? '✓ 정답입니다!' : '✗ 틀렸습니다.';
+  
+  const ansLines = q.a.split('  ').map(l => `<div>${l}</div>`).join('');
+  document.getElementById('result-answer').style.display = 'block';
+  document.getElementById('result-answer').querySelector('.result-answer-text').innerHTML = ansLines;
+
+  const meta = card.querySelector('.q-tag');
+  meta.style.color = correct ? 'var(--green)' : 'var(--red)';
+  meta.textContent = correct ? '✓ 정답' : '✗ 오답';
+
+  updateFooter();
 }
 
-function showResult(correct,ans,silent){
-  const box=document.getElementById('res-box');
-  const atxt=document.getElementById('ans-txt');
-  if(!box) return;
-  box.style.display='block';
-  box.className='result-box '+(correct?'correct':'wrong');
-  box.textContent=correct?'정답입니다!':'틀렸습니다.';
-  atxt.style.display='block';
-  atxt.innerHTML='<strong>정답:</strong> '+ans.replace(/  /g,'<br>');
+function updateFooter() {
+  const total = filteredOrder.length;
+  const done = Object.keys(results).length;
+  document.getElementById('footer-info').textContent =
+    `${done}/${total} 응답 완료`;
+  document.getElementById('sc-correct').textContent = correctCount;
+  document.getElementById('sc-wrong').textContent = wrongCount;
+  document.getElementById('sc-skip').textContent = skipCount;
 }
 
-function updateScore(){
-  document.getElementById('sc-correct').textContent=correctCount;
-  document.getElementById('sc-wrong').textContent=wrongCount;
-  document.getElementById('sc-skip').textContent=skipCount;
-}
-
-function go(dir){
-  cur+=dir;
-  if(cur<0) cur=filteredOrder.length-1;
-  if(cur>=filteredOrder.length) cur=0;
+function go(dir) {
+  cur += dir;
+  if (cur < 0) cur = filteredOrder.length - 1;
+  if (cur >= filteredOrder.length) cur = 0;
   render();
 }
 
-function skipQ(){
-  const idx=currentQIdx();
-  skippedSet.add(idx);
+function skipQ() {
   skipCount++;
-  updateScore();
   go(1);
 }
 
-function resetAll(){
-  results={};wrongSet=new Set();skippedSet=new Set();
-  correctCount=0;wrongCount=0;skipCount=0;cur=0;
-  buildOrder();render();
+function resetAll() {
+  results = {}; wrongSet = new Set();
+  correctCount = 0; wrongCount = 0; skipCount = 0;
+  cur = 0;
+  buildOrder();
+  render();
 }
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowRight') go(1);
+  else if (e.key === 'ArrowLeft') go(-1);
+  else if (e.key === 'h' || e.key === 'H') {
+    const btn = document.getElementById('hint-btn');
+    if (btn) btn.click();
+  }
+});
 
 buildOrder();
 render();
 </script>
+</body>
+</html>
