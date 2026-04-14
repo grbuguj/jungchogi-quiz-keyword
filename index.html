@@ -1,0 +1,344 @@
+
+<h2 class="sr-only">정보처리기사 실기 키워드 찾기 130문제 퀴즈</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+#app{padding:1rem 0;max-width:720px;margin:0 auto}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:8px}
+.title{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.stat{font-size:13px;color:var(--color-text-secondary)}
+.progress-bar{width:100%;height:6px;background:var(--color-background-secondary);border-radius:3px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;background:#1D9E75;border-radius:3px;transition:width 0.3s}
+.q-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+.q-num{font-size:12px;color:var(--color-text-tertiary);margin-bottom:8px}
+.q-text{font-size:15px;color:var(--color-text-primary);line-height:1.6;margin-bottom:1rem}
+.hint-btn{font-size:12px;color:var(--color-text-secondary);background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:4px 10px;cursor:pointer;margin-bottom:12px}
+.hint-btn:hover{background:var(--color-background-secondary)}
+.hint-text{font-size:13px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;margin-bottom:12px;line-height:1.5;display:none}
+.input-row{display:flex;gap:8px;margin-bottom:10px}
+.ans-input{flex:1;padding:8px 12px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);outline:none}
+.ans-input:focus{border-color:var(--color-border-primary)}
+.check-btn{padding:8px 16px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;white-space:nowrap}
+.check-btn:hover{background:var(--color-background-secondary)}
+.result-box{font-size:14px;padding:10px 12px;border-radius:var(--border-radius-md);margin-bottom:8px;display:none}
+.result-box.correct{background:#EAF3DE;color:#27500A;border:0.5px solid #97C459}
+.result-box.wrong{background:#FCEBEB;color:#791F1F;border:0.5px solid #F09595}
+.answer-text{font-size:13px;color:var(--color-text-secondary);display:none;margin-top:6px}
+.nav-row{display:flex;gap:8px;justify-content:space-between;margin-top:1rem;flex-wrap:wrap}
+.nav-btn{padding:8px 18px;font-size:14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer}
+.nav-btn:hover{background:var(--color-background-secondary)}
+.nav-btn.primary{background:var(--color-background-secondary)}
+.mode-row{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.mode-btn{padding:6px 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer}
+.mode-btn.active{border-color:var(--color-border-primary);color:var(--color-text-primary);font-weight:500}
+.score-card{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.5rem;text-align:center;margin-bottom:1rem}
+.score-big{font-size:36px;font-weight:500;color:var(--color-text-primary)}
+.score-sub{font-size:14px;color:var(--color-text-secondary);margin-top:4px}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin-right:4px;margin-bottom:4px;background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.reveal-btn{font-size:12px;color:var(--color-text-secondary);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0}
+</style>
+
+<div id="app">
+  <div class="header">
+    <div class="title">정보처리기사 실기 키워드 130</div>
+    <div class="stat" id="stat-txt">1 / 130</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0.77%"></div></div>
+  <div class="mode-row">
+    <button class="mode-btn active" onclick="setMode('seq')">순서대로</button>
+    <button class="mode-btn" onclick="setMode('rand')">랜덤</button>
+    <button class="mode-btn" onclick="setMode('wrong')">틀린문제만</button>
+  </div>
+  <div id="q-container"></div>
+  <div class="nav-row">
+    <button class="nav-btn" onclick="go(-1)">← 이전</button>
+    <button class="nav-btn" onclick="skipQ()">건너뛰기</button>
+    <button class="nav-btn primary" onclick="go(1)">다음 →</button>
+  </div>
+  <div style="margin-top:1.5rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <div style="font-size:13px;color:var(--color-text-secondary)">맞음 <strong id="sc-correct">0</strong> &nbsp; 틀림 <strong id="sc-wrong">0</strong> &nbsp; 건너뜀 <strong id="sc-skip">0</strong></div>
+    <button class="mode-btn" onclick="resetAll()">처음부터</button>
+  </div>
+</div>
+
+<script>
+const QS=[
+{q:"시제품을 끊임없이 제작하며 사이클을 반복하는 개발 방법론으로, 워터폴과 대조적이며 소프트웨어 개발을 넘어 기업 경영 전반에서 사용되고 있다. 고객의 변화하는 요구사항과 환경 변화에 능동적인 이 소프트웨어 개발 방법론을 쓰시오.",a:"애자일(Agile)",h:"워터폴의 반대, 반복적 사이클"},
+{q:"소프트웨어 공학에서 리팩토링(Refactoring)을 하는 목적에 대해 간략히 서술하시오.",a:"리팩토링의 목적은 프로그램을 쉽게 이해하고 수정하여 빠르게 개발할 수 있도록 하기 위함이다.",h:"코드 품질 개선, 가독성 향상"},
+{q:"요구사항 확인에서 ① 시스템이 무엇을 하는지, 어떤 기능을 하는지 사용자가 제공받기를 원하는 기능 요구사항과, ② 품질이나 제약사항과 관련된 요구사항(성능, 인터페이스, 보안 등)을 각각 무엇이라 하는가?",a:"① 기능 요구사항  ② 비기능 요구사항",h:"기능 vs 비기능"},
+{q:"UML 다이어그램 중 객체(Object)들을 추상화하여 표현하는 대표적인 구조적 다이어그램으로, 3개의 구획으로 나눠 이름, 속성, 메소드를 표기하는 것은?",a:"클래스(Class) 다이어그램",h:"이름/속성/메소드 3구획"},
+{q:"UML에서 ① 사물과 사물 사이의 연관성을 표현하는 것, ② UML에 표현되는 사물로 객체의 속성과 동작을 표현하는 것, ③ ②나 컴포넌트의 동작을 모아놓은 것으로 외부적으로 가시화되는 행동을 표현하며 단독 사용 없는 것을 각각 쓰시오.",a:"① 관계(Relationship)  ② 클래스(Class)  ③ 인터페이스(Interface)",h:"관계/클래스/인터페이스"},
+{q:"UML 관계(Relationships) 중 ① 하나의 사물이 다른 사물에 포함되어 있는 관계로 전체와 부분으로 구분되며 서로 독립적인 관계와, ② 상위 모듈이 더 일반적이고 하위 모듈이 더 구체적인 개념을 가지는 관계를 각각 영문으로 쓰시오.",a:"① Aggregation  ② Generalization",h:"집합/일반화"},
+{q:"UML을 이용한 다이어그램 중 패키지 간의 import 관계 등을 표현하는 다이어그램을 쓰시오.",a:"패키지 다이어그램(Package Diagram)",h:"패키지 묶음 표현"},
+{q:"LOC 기법에 의하여 예측된 총 라인 수가 30,000라인, 개발에 참여할 프로그래머가 5명, 프로그래머들의 평균 생산성이 월간 300라인일 때 개발에 소요되는 기간을 계산식과 함께 쓰시오.",a:"계산식: (30,000/300)/5 = 20  답: 20개월",h:"(LOC/생산성)/인원"},
+{q:"데이터베이스의 스키마(Schema)에 대해 간략히 서술하시오.",a:"스키마는 데이터베이스의 구조와 제약 조건에 관한 전반적인 명세를 기술한 것이다.",h:"DB 구조와 제약조건 명세"},
+{q:"데이터베이스 설계에서 ① 논리적 구조를 디스크 저장장치에 저장할 수 있는 데이터로 변환하는 과정, ② 현실 세계를 추상적 개념으로 표현하며 E-R 다이어그램 작성하는 과정, ③ DBMS가 지원하는 자료구조로 변환하며 정규화를 수행하는 과정을 각각 쓰시오.",a:"① 물리적 설계  ② 개념적 설계  ③ 논리적 설계",h:"물리/개념/논리 설계"},
+{q:"데이터베이스 구축까지의 과정을 나열하시오. 요구 분석 → ( ) → ( ) → ( ) → 구현",a:"개념적 설계, 논리적 설계, 물리적 설계",h:"개념→논리→물리"},
+{q:"데이터 모델의 구성 요소 중 ① 데이터베이스에 저장된 실제 데이터를 처리하는 작업에 대한 명세로 데이터베이스를 조작하는 기본 도구, ② 논리적으로 표현된 객체 타입들 간의 관계로 데이터의 구성 및 정적 성질을 표현하는 것을 각각 쓰시오.",a:"① 연산(Operation)  ② 구조(Structure)",h:"연산/구조"},
+{q:"다음 테이블에서 카디널리티(Cardinality)와 디그리(Degree)를 구하시오. [회원 테이블: ID, 이름, 거주지, 신청강의 - 5개 행]",a:"카디널리티(Cardinality): 5  디그리(Degree): 4",h:"카디널리티=행 수, 디그리=열 수"},
+{q:"E-R 다이어그램에서 ① 관계 집합, ② 관계 집합과 속성을 연결, ③ 개체 집합(키에 밑줄), ④ 관계 집합의 속성, ⑤ 개체 집합과 관계 집합을 연결하는 요소를 각각 기호(㉠~㉤)로 쓰시오.",a:"① ㉡  ② ㉢  ③ ㉠  ④ ㉣  ⑤ ㉤",h:"다이어그램 기호 매핑"},
+{q:"키(Key)에서 ① 슈퍼키가 만족하는 성질과 ② 후보키가 추가로 만족해야 하는 성질(부분집합 속성)을 각각 쓰시오.",a:"① 유일성(Unique)  ② 최소성(Minimality)",h:"유일성/최소성"},
+{q:"관계대수에서 ① 합집합, ② 차집합, ③ 교차곱(CARTESIAN PRODUCT), ④ 프로젝트, ⑤ 조인의 기호를 각각 쓰시오.",a:"① ∪  ② −  ③ ×  ④ π  ⑤ ▷◁",h:"관계대수 기호 5가지"},
+{q:"릴레이션 A, B가 있을 때 릴레이션 B의 조건에 맞는 것들만 릴레이션 A에서 분리하여 프로젝션을 하는 관계대수 연산자의 기호를 쓰시오.",a:"÷",h:"나누기 연산"},
+{q:"원하는 정보가 무엇이라는 것만 정의하는 비절차적 특성을 지니며, 튜플 해석식과 도메인 해석식으로 구분되는 것을 쓰시오.",a:"관계해석(Relational Calculus)",h:"비절차적, 튜플/도메인"},
+{q:"데이터의 중복으로 인해 테이블에서 튜플을 삭제할 때 의도와는 상관없는 값들도 함께 삭제되는 이상(Anomaly) 현상을 쓰시오.",a:"삭제 이상(Deletion Anomaly)",h:"의도치 않은 삭제"},
+{q:"데이터베이스의 이상(Anomaly)의 종류 3가지를 쓰시오.",a:"삽입 이상(Insertion Anomaly), 삭제 이상(Deletion Anomaly), 갱신 이상(Update Anomaly)",h:"삽입/삭제/갱신"},
+{q:"함수적 종속(Functional Dependency)에서 ① 기본키 전체에 종속되는 경우, ② 기본키 일부에만 종속되는 경우, ③ A→B이고 B→C일 때 A→C인 관계를 각각 쓰시오.",a:"① Full(완전) FD  ② Partial(부분) FD  ③ Transitive(이행적) FD",h:"완전/부분/이행적"},
+{q:"부분 함수적 종속을 제거하여 만드는 정규형은 몇 정규형인가?",a:"제 2 정규형",h:"부분 함수적 종속 제거"},
+{q:"시스템의 성능을 향상시키고 개발 및 운영의 편의성 등을 높이기 위해 정규화된 데이터 모델을 의도적으로 통합, 중복, 분리하여 정규화 원칙을 위배하는 행위를 가리키는 용어를 쓰시오.",a:"반정규화(Denormalization)",h:"의도적 정규화 위배"},
+{q:"데이터베이스에서 비정규화(Denormalization)의 개념을 서술하시오.",a:"비정규화는 정규화된 데이터 모델을 통합, 중복, 분리하는 과정으로, 의도적으로 정규화 원칙을 위배하는 행위이다.",h:"정규화 원칙 의도적 위배"},
+{q:"트랜잭션(Transaction)의 특성 중 원자성(Atomicity)에 대해 간략히 서술하시오.",a:"원자성은 트랜잭션의 연산은 데이터베이스에 모두 반영되도록 완료되든지 아니면 전혀 반영되지 않도록 복구되어야 한다는 특성이다.",h:"All or Nothing"},
+{q:"트랜잭션(Transaction)의 특징 중 ① All or Nothing 특성과 ② 둘 이상의 트랜잭션이 병행 실행 시 다른 트랜잭션이 끼어들 수 없는 특성을 각각 쓰시오.",a:"① 원자성(Atomicity)  ② 독립성(Isolation)",h:"원자성/독립성"},
+{q:"파일의 구조는 크게 순차, ( ), 해싱으로 구분한다. ( ) 파일 구조는 <값, 주소> 쌍으로 구성되는 데이터 구조를 활용하여 데이터에 접근하는 방식이다. 괄호에 들어갈 용어를 쓰시오.",a:"색인(Index)",h:"값-주소 쌍"},
+{q:"비상 상황 발생 시 '비상사태 또는 업무중단 시점부터 업무가 복구되어 다시 정상 가동될 때까지의 시간'을 의미하는 용어를 쓰시오.",a:"RTO(목표복구시간)",h:"복구까지 걸리는 시간"},
+{q:"접근통제 기술 중 데이터에 접근하는 사용자의 신원에 따라 접근 권한을 부여하여 제어하는 방식으로, 데이터 소유자가 접근통제 권한을 지정하고 제어하는 것을 쓰시오.",a:"DAC(임의 접근통제)",h:"소유자가 권한 지정"},
+{q:"DB 트랜잭션 연산 중 ① 시작(start)과 완료(commit) 기록이 있는 트랜잭션을 재작업하는 연산과, ② 시작(start)은 있지만 완료(commit) 기록이 없는 트랜잭션의 작업을 취소하는 연산을 각각 쓰시오.",a:"① REDO  ② UNDO",h:"REDO/UNDO"},
+{q:"웹 페이지의 기본 형식인 HTML의 문법이 각 웹 브라우저에서 상호 호환적이지 못하다는 문제와 SGML의 복잡함을 해결하기 위하여 개발된 마크업 언어로, 송수신 시스템 간에 전송되는 데이터의 구조를 정의하는 것을 쓰시오.",a:"XML(eXtensible Markup Language)",h:"확장 가능한 마크업 언어"},
+{q:"HTTP, HTTPS, SMTP 등을 사용하여 xml 기반의 메시지를 네트워크 상에서 교환하는 프로토콜로, envelope, 헤더(header), 바디(body) 등이 추가된 xml 문서를 쓰시오.",a:"SOAP(Simple Object Access Protocol)",h:"xml 기반 메시지 교환"},
+{q:"웹 서비스와 관련된 서식이나 프로토콜 등을 표준적인 방법으로 기술하고 게시하기 위한 언어로, XML로 작성되며 UDDI의 기초가 되는 것을 쓰시오.",a:"WSDL(Web Services Description Language)",h:"웹서비스 기술 언어"},
+{q:"럼바우(Rumbaugh) 데이터 모델링에서 ① 다수의 프로세스들 간의 자료 흐름을 중심으로 처리 과정을 표현한 모델링, ② 시간의 흐름에 따른 객체들 간의 제어 흐름 등 동적인 행위를 표현하는 모델링, ③ 시스템에서 요구되는 객체를 찾아 속성과 연산 식별 및 객체들 간 관계를 규정하는 모델링을 각각 쓰시오.",a:"① 기능(Function) 모델링  ② 동적(Dynamic) 모델링  ③ 객체(Object/Information) 모델링",h:"기능/동적/객체"},
+{q:"자신이 사용하지 않는 인터페이스와 의존 관계를 맺거나 영향을 받지 않아야 한다는 객체지향 설계 원칙(SOLID)을 쓰시오.",a:"ISP(Interface Segregation Principle, 인터페이스 분리 원칙)",h:"인터페이스 분리"},
+{q:"결합도(Coupling)의 종류 중 단순 처리 대상인 데이터만 전달되는 것이 아니라 어떻게 처리해야 하는지를 결정하는 제어 요소가 전달되는 경우의 결합도를 영문으로 쓰시오.",a:"Control Coupling",h:"제어 요소 전달"},
+{q:"결합도 종류 중 ① 모듈 간의 인터페이스로 데이터, 지역 변수 등을 직접 참조하거나 수정할 때의 결합도, ② 배열이나 레코드 등의 자료 구조가 전달될 때의 결합도, ③ 파라미터가 아닌 모듈 밖에 선언된 전역 변수를 사용하여 상호작용하는 때의 결합도를 각각 쓰시오.",a:"① 내용 결합도  ② 스탬프 결합도  ③ 공통 결합도",h:"내용/스탬프/공통"},
+{q:"소프트웨어 패키징에서 모듈화의 목표: 모듈 간 ①의 최소화와 모듈 내 요소들의 ②를 최대화하는 것. ①과 ②를 각각 쓰시오.",a:"① 결합도(Coupling)  ② 응집도(Cohesion)",h:"결합도↓ 응집도↑"},
+{q:"모듈에 대한 설명에서 ① 내부의 요소들이 기능적으로 연관성은 없으나 순차적으로 실행될 때의 응집도, ② 서로 다른 기능을 수행하지만 동일한 입력과 출력을 사용할 때의 응집도, ③ 하나의 기능에 밀접하게 관련되어 있을 때의 응집도를 각각 쓰시오.",a:"① 절차적 응집도  ② 교환적 응집도  ③ 기능적 응집도",h:"절차적/교환적/기능적"},
+{q:"다음의 모듈 관계를 표현한 시스템 구조도에서 모듈 F의 팬인(Fan-In)과 팬아웃(Fan-Out)을 구하시오. [A→B,C,D / B,C→F / F→G,H / D→F]",a:"팬인(Fan-In): 3  팬아웃(Fan-Out): 2",h:"Fan-In=들어오는 수, Fan-Out=나가는 수"},
+{q:"모듈 간 통신 방식을 구현하기 위해 사용되는 대표적인 프로그래밍 인터페이스 집합으로, 공유 메모리, 소켓, 세마포어, 파이프, 메시지 큐잉이 포함되는 것을 쓰시오.",a:"IPC(Inter-Process Communication)",h:"프로세스 간 통신"},
+{q:"테스트 케이스의 구성 요소 중 ① 테스트 항목에 대한 조건, ② 실제 입력 값, ③ 기대되는 결과를 각각 쓰시오.",a:"① 테스트 조건  ② 테스트 데이터  ③ 예상 결과",h:"조건/데이터/결과"},
+{q:"디자인 패턴 중 객체 생성을 서브 클래스에서 처리하도록 분리하여 캡슐화한 패턴으로, 가상 생성자(Virtual Constructor) 패턴이라고도 불리는 것을 쓰시오.",a:"Factory Method",h:"가상 생성자 패턴"},
+{q:"디자인 패턴에서 ① 구현부에서 추상층을 분리하여 서로가 독립적으로 확장할 수 있도록 구성한 패턴, ② 한 객체의 상태가 변화하면 상속된 다른 객체들에게 변화된 상태를 전달하는 패턴(일대다 의존성)을 각각 쓰시오.",a:"① Bridge  ② Observer",h:"Bridge/Observer"},
+{q:"디자인 패턴 중 클래스나 객체들이 서로 상호작용하는 방법이나 책임 분배 방법을 정의하는 패턴(Interpreter, Observer, Command 등이 예)을 쓰시오.",a:"행위(Behavioral) 패턴",h:"상호작용/책임 분배"},
+{q:"기업 내 각종 애플리케이션 및 플랫폼 간의 정보 전달, 연계, 통합 등 상호 연동이 가능하게 해주는 솔루션으로, Point-to-Point, Hub&Spoke, Message Bus, Hybrid 등의 구축 방식을 가지는 것을 쓰시오.",a:"EAI(Enterprise Application Integration)",h:"기업 애플리케이션 통합"},
+{q:"EAI의 구축 유형 중 ① 가장 기본적인 방식으로 애플리케이션을 1:1로 연결하여 변경 및 재사용이 어려운 유형과, ② 단일 접점인 허브 시스템을 통해 데이터를 전송하는 중앙 집중형 방식을 각각 쓰시오.",a:"① Point to Point  ② Hub & Spoke",h:"1:1 연결 / 허브 중앙집중"},
+{q:"속성-값 쌍(Attribute-Value Pairs)으로 이루어진 데이터 객체를 전달하기 위해 사람이 읽을 수 있는 텍스트를 사용하는 개방형 표준 포맷으로, AJAX에서 XML을 대체하여 사용되고 있는 것을 쓰시오.",a:"JSON(JavaScript Object Notation)",h:"키-값 쌍 텍스트 포맷"},
+{q:"클라이언트와 서버 간 자바스크립트 및 XML을 비동기 방식으로 처리하며, 전체 페이지를 새로 고치지 않고도 웹페이지 일부 영역만을 업데이트할 수 있도록 하는 기술을 쓰시오.",a:"AJAX(Asynchronous JavaScript and XML)",h:"비동기 부분 업데이트"},
+{q:"네트워크 트래픽에 대해 IP 계층에서 패킷 단위의 데이터 변조 방지 및 은닉 기능을 제공하는 네트워크 계층에서의 보안 통신 규약을 쓰시오.",a:"IPSec(Internet Protocol Security)",h:"IP 계층 보안"},
+{q:"Kent Beck과 Erich Gamma 등이 개발한 자바 프로그래밍 언어용 유닛 테스트 프레임워크로, xUnit 계열의 한 종류인 것을 쓰시오.",a:"JUnit",h:"자바 유닛 테스트 프레임워크"},
+{q:"사용자의 자연스러운 움직임을 통해 시스템과 상호작용하는 사용자 인터페이스(UI)로, 시리(Siri), 빅스비(Bixby) 등 음성 명령이나 터치 등이 여기에 해당하는 것을 영문 약어로 쓰시오.",a:"NUI(Natural User Interface)",h:"자연스러운 움직임"},
+{q:"Windows, MacOS 등에서 사용하는 인터페이스로 사용자가 명령어를 직접 입력하지 않고 키보드와 마우스 등을 이용하여 아이콘이나 메뉴를 선택하여 모든 작업을 수행하는 사용자 인터페이스를 쓰시오.",a:"GUI(그래픽 사용자 인터페이스)",h:"아이콘/메뉴 선택"},
+{q:"UI(User Interface)의 설계 원칙 중 직관성에 대해 간략히 서술하시오.",a:"직관성은 누구나 쉽게 이해하고 사용할 수 있어야 한다는 설계 원칙이다.",h:"누구나 쉽게 이해"},
+{q:"사용자 인터페이스 설계 원칙 중 '사용자의 목적을 정확하고 완벽하게 달성해야 한다'는 원칙을 쓰시오.",a:"유효성",h:"목적 달성"},
+{q:"인터페이스 관련 용어 중 ① 사용자가 시스템이나 서비스를 이용하면서 느끼고 생각하게 되는 총체적인 감정 및 경험, ② 사용자와 시스템 간의 상호작용이 원활하게 이뤄지도록 도와주는 장치나 소프트웨어를 각각 쓰시오.",a:"① UX(사용자 경험)  ② UI(사용자 인터페이스)",h:"UX/UI"},
+{q:"애플리케이션 테스트에서 동일한 테스트 케이스로 동일한 테스트를 반복하면 더 이상 결함이 발견되지 않는 현상을 쓰시오.",a:"살충제 패러독스(Pesticide Paradox)",h:"반복 테스트의 한계"},
+{q:"애플리케이션을 실행하지 않고 소스 코드에 대한 코딩 표준, 코딩 스타일, 코드 복잡도 및 남은 결함을 발견하기 위하여 사용하는 테스트를 쓰시오.",a:"정적 분석(정적 테스트)",h:"실행 없이 분석"},
+{q:"테스트 커버리지(Coverage) 중 ① 최소 한번은 모든 문장이 수행되도록 구성하는 기준, ② 조건식이 참/거짓일 때 수행되도록 구성하는 기준, ③ 조건식에 상관없이 개별 조건이 참/거짓일 때 수행되도록 구성하는 기준을 각각 쓰시오.",a:"① 구문(문장) 검증 기준  ② 결정(분기)/조건 검증 기준  ③ 조건 검증 기준",h:"구문/결정조건/조건"},
+{q:"소프트웨어가 수행할 특정 기능을 알기 위해서 각 기능이 완전히 작동되는 것을 입증하는 테스트로, 동치 클래스 분해 및 경계값 분석을 이용하는 테스트 기법을 쓰시오.",a:"블랙박스 테스트(Black Box Test)",h:"동치분할/경계값 분석"},
+{q:"테스트 기법 중 각 영역의 경계에 해당하는 입력값을 넣고 예상되는 출력값이 나오는지 실제 값과 비교하는 명세 기반 테스트 기법을 쓰시오.",a:"Boundary Value Analysis(경계값 분석)",h:"경계 입력값 테스트"},
+{q:"테스트 기법 중 그래프를 활용하여 입력 데이터 간의 관계와 출력에 영향을 미치는 상황을 체계적으로 분석한 다음 효용성이 높은 테스트 케이스를 선정하여 검사하는 기법을 쓰시오.",a:"Cause-Effect Graph(원인-결과 그래프)",h:"그래프로 인과관계 분석"},
+{q:"테스트 기법 중 각 영역에 해당하는 입력 값을 넣고 예상되는 출력값이 나오는지 실제 값과 비교하는 명세 기반 테스트 기법을 쓰시오. (경계값이 아닌 각 구간 대표값 사용)",a:"동치 분할 검사(Equivalence Partitioning Testing)",h:"동치 클래스 구간 대표값"},
+{q:"개발 단계에 따른 애플리케이션 테스트 V-모델에서 ① 모듈 확인, ② 인터페이스 확인, ③ 기능 확인, ④ 요구사항 확인에 해당하는 테스트를 각각 쓰시오.",a:"① 단위 테스트  ② 통합 테스트  ③ 시스템 테스트  ④ 인수 테스트",h:"단위/통합/시스템/인수"},
+{q:"애플리케이션 테스트에서 ① 코딩 직후 모듈이나 컴포넌트에 초점을 맞춰 수행하는 테스트(모듈 테스트), ② 모듈들을 결합하여 하나의 시스템으로 완성시키는 과정에서의 테스트를 각각 쓰시오.",a:"① 단위 테스트(Unit Test)  ② 통합 테스트(Integration Test)",h:"단위/통합"},
+{q:"인수 테스트 중 ① 선정된 최종 사용자가 여러 명의 사용자 앞에서 실제 업무를 가지고 직접 테스트하는 기법, ② 개발자의 장소에서 사용자가 개발자 앞에서 테스트하는 기법을 각각 쓰시오.",a:"① 베타 테스트(Beta Test)  ② 알파 테스트(Alpha Test)",h:"베타(현장)/알파(개발자 앞)"},
+{q:"통합 테스트에서 하향식 통합 테스트 시 미완성이거나 문제가 있는 하위 모듈을 대체할 수 있는 더미 모듈을 쓰시오.",a:"스텁(Stub)",h:"하위 모듈 대체 더미"},
+{q:"애플리케이션 테스트에서 ① 소프트웨어의 하위 모듈에서 상위 모듈 방향으로 통합하면서 테스트하는 기법, ② 데이터의 입출력을 확인하기 위해 생성하는 더미 모듈을 각각 쓰시오.",a:"① 상향식 통합 테스트  ② 드라이버(Driver)",h:"상향식/드라이버"},
+{q:"통합 테스트로 인해 변경된 모듈이나 컴포넌트에 새로운 오류가 있는지 확인하는 테스트로, 이미 테스트된 프로그램의 테스팅을 반복하는 것을 쓰시오.",a:"Regression(회귀 테스트)",h:"변경 후 재테스트"},
+{q:"특정한 몇몇 테스트 케이스의 입력 값들에 대해서만 기대하는 결과를 제공하는 오라클로, 전수 테스트가 불가능한 경우 사용하고 경계값 및 구간별 예상값 결과 작성 시 사용하는 오라클을 쓰시오.",a:"샘플링 오라클(Sampling Oracle)",h:"일부 케이스만 결과 제공"},
+{q:"애플리케이션 성능 측정 지표 중 ① 일정 시간 내에 애플리케이션이 처리하는 일의 양, ② 애플리케이션에 요청을 전달한 시간부터 응답이 도착할 때까지 걸린 시간, ③ 애플리케이션에 작업을 의뢰한 시간부터 처리가 완료될 때까지 걸린 시간을 각각 쓰시오.",a:"① 처리량(Throughput)  ② 응답 시간(Response Time)  ③ 경과 시간(Turn Around Time)",h:"처리량/응답시간/경과시간"},
+{q:"소스 코드 품질 분석 도구 중 ① 소스 코드를 실행하지 않고 코딩 표준이나 코딩 스타일, 결함 등을 확인하는 도구, ② 소스 코드를 직접 실행하여 프로그램의 동작이나 반응을 추적하고 보고하는 분석 도구를 각각 쓰시오.",a:"① 정적 분석(Static Analysis)  ② 동적 분석(Dynamic Analysis)",h:"정적/동적 분석"},
+{q:"데이터를 제어하는 DCL의 하나인 GRANT의 기능에 대해 간략히 서술하시오.",a:"GRANT는 데이터베이스 관리자가 데이터베이스 사용자에게 권한을 부여하는 데 사용하는 명령어이다.",h:"권한 부여 명령어"},
+{q:"데이터를 제어하는 DCL의 하나인 ROLLBACK에 대해 간략히 서술하시오.",a:"ROLLBACK은 트랜잭션이 실패한 경우 작업을 취소하고 이전 상태로 되돌리기 위한 명령어이다.",h:"작업 취소, 이전 상태 복귀"},
+{q:"데이터베이스 보안에서 가용성(Availability)에 대해 간략히 서술하시오.",a:"가용성은 인가받은 사용자는 시스템 내의 정보와 자원을 언제라도 사용할 수 있다는 보안 요건이다.",h:"인가받은 사용자 언제든 접근"},
+{q:"보안 위협의 하나인 SQL Injection에 대해 간략히 서술하시오.",a:"SQL Injection은 웹 응용 프로그램에 SQL 구문을 삽입하여 내부 데이터베이스(DB) 서버의 데이터를 유출 및 변조하고 관리자 인증을 우회하는 공격 기법이다.",h:"SQL 구문 삽입 공격"},
+{q:"암호화 알고리즘 중 ① 스위스의 라이(Lai)와 메시(Messey)가 1990년 PES를 발표하고 이후 개선한 IPES, 128비트 Key로 64비트 블록을 암호화하는 알고리즘의 현재 이름과, ② 국가 안전 보장국(NSA)에서 개발한 암호화 알고리즘으로 80비트 Key로 64비트 블록을 암호화하는 것을 각각 쓰시오.",a:"① IDEA(International Data Encryption Algorithm)  ② Skipjack",h:"IDEA/Skipjack"},
+{q:"무선랜 보안에 사용된 WEP 방식을 보완한 데이터 보안 프로토콜로, 암호 알고리즘의 입력 키 길이를 128비트로 늘리고 패킷당 키 할당, 키값 재설정 등 키 관리 방식을 개선한 것을 영문 약어로 쓰시오.",a:"TKIP(Temporal Key Integrity Protocol)",h:"WEP 보완, 임시 키 무결성"},
+{q:"1974년 IBM이 개발하고 1975년 NBS에 의해 미국의 국가 표준으로 발표된 암호화 알고리즘으로, 블록 크기는 64비트, 키 길이는 56비트이며 16회의 라운드를 수행하는 것을 쓰시오.",a:"DES(Data Encryption Standard)",h:"64비트 블록, 56비트 키, 16라운드"},
+{q:"2001년 미국 표준 기술 연구소(NIST)에서 발표한 대칭키 암호화 알고리즘으로, DES의 한계를 느낀 NIST에서 공모한 후 발표하였으며 블록 크기는 128비트이며 키 길이에 따라 128, 192, 256으로 분류되는 것을 쓰시오.",a:"AES(Advanced Encryption Standard)",h:"128비트 블록, 키 128/192/256"},
+{q:"1991년 R.rivest가 MD4를 개선한 암호화 알고리즘으로, 512비트 입력 메시지 블록에 대해 차례로 동작하고 128비트 스테이트(state)의 값이 변하는 것을 쓰시오.",a:"MD5(Message Digest algorithm 5)",h:"512비트 입력, 128비트 출력"},
+{q:"보안 위협에서 ARP 스푸핑은 로컬 네트워크(LAN)에서 사용하는 ( ) 프로토콜의 취약점을 이용한 공격 기법으로, 자신의 물리적 주소(MAC)를 변조하여 다른 PC에게 도달해야 하는 데이터 패킷을 가로채거나 방해한다. 괄호에 들어갈 용어를 쓰시오.",a:"ARP(Address Resolution Protocol)",h:"MAC 주소 변조"},
+{q:"공격자가 패킷의 출발지 주소 또는 포트를 임의로 변경하여 송신측 IP 주소 또는 포트를 동일하게 함으로써 자신에게 응답을 수행하게 하여 무한히 응답하는 패킷을 계속 전송하여 서비스 거부 상태에 빠지도록 하는 공격 유형을 쓰시오.",a:"LAND Attack(Local Area Network Denial Attack)",h:"출발지=목적지 주소"},
+{q:"보안 관련 용어 중 ① 인간 상호 작용의 깊은 신뢰를 바탕으로 사람들을 속여 정상 보안 절차를 깨트리기 위한 비기술적 시스템 침입 수단, ② 특정 목적을 가지고 데이터를 수집하였으나 이후 활용되지 않고 저장만 되어있는 대량의 데이터를 각각 쓰시오.",a:"① 사회 공학(Social Engineering)  ② 다크 데이터(Dark Data)",h:"사회공학/다크데이터"},
+{q:"정상적인 연결을 RST 패킷을 통해 종료시킨 후 재연결 시 희생자가 아닌 공격자에게 연결하는 공격 기법으로, TCP 3-Way-Handshake 과정에 끼어들어 인가되지 않은 시스템 기능을 이용하는 것을 쓰시오.",a:"세션 하이재킹(Session Hijacking)",h:"세션 가로채기"},
+{q:"목표 조직이 자주 방문하는 웹 사이트를 사전에 감염시켜 목표 조직의 일원이 방문했을 때 악성 코드에 감염되게 하는 웹 기반 공격을 쓰시오.",a:"Watering Hole",h:"물웅덩이 공격"},
+{q:"AAA 서버에서 ① 접근하는 사용자의 신원을 검증하는 기능, ② 신원이 검증된 사용자에게 특정된 권한과 서비스를 허용하는 기능, ③ 사용자가 어떤 종류의 서비스를 이용했고 얼마만큼의 자원을 사용했는지 기록 및 보관하는 기능을 각각 쓰시오.",a:"① Authentication(인증)  ② Authorization(인가)  ③ Accounting(계정)",h:"인증/인가/계정"},
+{q:"인터넷 등 통신 사업자의 공중 네트워크와 암호화 기술을 이용하여 사용자가 마치 자신의 전용 회선을 사용하는 것처럼 해주는 보안 솔루션으로, SSL VPN과 IPSec VPN으로 불리는 것을 쓰시오.",a:"VPN(Virtual Private Network)",h:"가상 사설망"},
+{q:"다양한 장비에서 발생하는 로그 및 보안 이벤트를 통합하여 관리하는 보안 솔루션으로, 방화벽, IDS, IPS, VPN 등에서 발생한 로그 및 보안 이벤트를 통합하여 관리하는 것을 쓰시오.",a:"SIEM(Security Information & Event Management)",h:"보안 이벤트 통합 관리"},
+{q:"헝가리안 표기법(Hungarian Notation)에 대해 간략히 서술하시오.",a:"헝가리안 표기법은 변수명 작성 시 변수의 자료형을 알 수 있도록 자료형을 의미하는 문자를 포함하여 작성하는 방법이다.",h:"변수명에 자료형 포함"},
+{q:"스니핑(Sniffing)에 대한 개념을 간략히 한 문장으로 쓰시오.",a:"스니핑은 네트워크의 중간에서 남의 패킷 정보를 도청하는 해킹 유형의 하나로 수동적 공격에 해당한다.",h:"패킷 도청, 수동적 공격"},
+{q:"C++에서 생성자(Constructor)에 대해 간략히 서술하시오.",a:"생성자는 객체 변수 생성에 사용되는 메소드로, 객체 변수를 생성하면서 초기화를 수행한다.",h:"객체 생성 시 초기화"},
+{q:"1960년대 AT&T 벨(Bell) 연구소가 MIT, General Electric 사와 함께 공동 개발한 운영체제로, 시분할 시스템(Time Sharing System)을 위해 설계된 대화식 운영체제이며, 대부분 C 언어로 작성되어 이식성이 높은 것을 쓰시오.",a:"UNIX(유닉스)",h:"시분할, C언어, 트리 파일시스템"},
+{q:"Python 리스트 객체에 속한 메소드 중 ① 기존 리스트에 인수의 요소들을 추가하여 확장하는 메소드, ② 리스트에서 맨 마지막 또는 인수의 값에 해당하는 위치의 요소를 삭제한 후 반환하는 메소드, ③ 리스트에 저장된 각 요소들의 순서를 역순으로 뒤집어 저장하는 메소드를 각각 쓰시오.",a:"① extend()  ② pop()  ③ reverse()",h:"extend/pop/reverse"},
+{q:"리눅스의 커널 위에서 동작하며, 자바와 코틀린으로 애플리케이션을 작성하는 운영체제로 휴대용 장치에서 주로 사용되는 이 운영체제의 이름을 쓰시오.",a:"안드로이드(Android)",h:"모바일, 자바/코틀린"},
+{q:"프로세스 상태 전이도에서 ① Job 스케줄러가 실행 직전 준비 상태, ② CPU가 할당된 상태, ③ 입출력 발생으로 대기하는 상태를 각각 쓰시오.",a:"① 준비(Ready)  ② 실행(Run)  ③ 대기(Wait)",h:"준비/실행/대기"},
+{q:"HRN 비선점형 스케줄링의 우선순위를 구하는 계산식을 쓰시오.",a:"(대기 시간 + 서비스 시간) / 서비스 시간",h:"대기+서비스 / 서비스"},
+{q:"스케줄링 중 ① 실행 시간이 가장 짧은 프로세스에게 먼저 CPU를 할당하는 기법, ② 시분할 시스템을 위해 고안된 방식으로 시간 할당량 동안만 실행 후 다음 프로세스에게 CPU를 넘겨주는 기법, ③ 현재 실행 중인 프로세스의 남은 시간과 새로 도착한 프로세스의 실행 시간을 비교하여 가장 짧은 것에 할당하는 기법을 각각 쓰시오.",a:"① SJF(Shortest Job First)  ② RR(Round Robin)  ③ SRT(Shortest Remaining Time)",h:"SJF/RR/SRT"},
+{q:"리눅스 또는 유닉스에서 'a.txt' 파일에 사용자(읽기,쓰기,실행), 그룹(읽기,실행), 기타 사용자(실행) 권한을 부여하는 8진법 명령문을 작성하시오.",a:"chmod 751 a.txt",h:"rwx=7, r-x=5, --x=1"},
+{q:"인터넷에서 ① IPv6는 몇 비트의 주소를 가지며, ② IPv4는 몇 비트씩 4부분으로 구성되는가?",a:"① 128비트  ② 8비트",h:"IPv6=128, IPv4=32(8×4)"},
+{q:"192.168.1.0/24 네트워크를 FLSM 방식으로 3개의 Subnet으로 나누었을 때, 두 번째 네트워크의 브로드캐스트 IP 주소를 10진수 방식으로 쓰시오.",a:"192.168.1.127",h:"64개씩 분할, 2번째 64~127"},
+{q:"서브네팅에서 IP 주소가 192.168.1.132이고, 서브넷 마스크가 255.255.255.192일 때, ① 네트워크 주소의 마지막 옥텟과 ② 사용 가능 호스트의 수를 쓰시오.",a:"① 128  ② 62개",h:"3번째 네트워크, 64-2=62"},
+{q:"IPv4의 주소 부족 문제를 해결하기 위해 개발되었으며, 16비트씩 8부분 총 128비트로 구성되어 있고 각 부분을 16진수로 표현하고 콜론(:)으로 구분하는 것을 쓰시오.",a:"IPv6(Internet Protocol version 6)",h:"128비트, 16진수, 콜론 구분"},
+{q:"OSI 7 Layer에서 ① 물리적으로 연결된 두 인접 시스템 간 신뢰성 있는 정보 전송(연결 설정, 오류 제어), ② 개방 시스템들 간 네트워크 연결 관리(경로 제어, 패킷 교환), ③ 서로 다른 데이터 표현 형태를 가진 시스템 간 코드 변환, 데이터 암호화, 압축을 담당하는 계층을 각각 쓰시오.",a:"① 데이터 링크 계층(Data Link Layer)  ② 네트워크 계층(Network Layer)  ③ 표현 계층(Presentation Layer)",h:"데이터링크/네트워크/표현"},
+{q:"OSI 참조 모델의 계층 중 다양한 전송매체를 통해 비트 스트림을 전송하며, 두 장치 간의 실제 접속과 절단 등 기계적, 전기적, 기능적, 절차적 특성에 대한 규칙을 정의하는 계층을 쓰시오.",a:"물리 계층(Physical Layer)",h:"비트 전송, 실제 접속"},
+{q:"심리학자 톰 마릴은 컴퓨터가 메시지를 전달하고, 제대로 도착했는지 확인하며, 도착하지 않았을 경우 재전송하는 일련의 방법을 '기술적 은어'를 뜻하는 ( )이라는 용어로 정의하였다.",a:"프로토콜(Protocol)",h:"통신 규약"},
+{q:"프로토콜의 기본 요소 3가지를 쓰시오.",a:"구문(Syntax), 의미(Semantics), 시간(Timing)",h:"구문/의미/시간"},
+{q:"인터넷 관련 용어 중 ① 월드 와이드 웹(WWW)에서 HTML 문서를 송수신하기 위한 표준 프로토콜, ② 다른 문서나 그림으로 이동할 수 있는 연결을 가지고 있는 텍스트, ③ 인터넷의 표준 문서인 하이퍼텍스트 문서를 만들기 위해 사용하는 언어를 각각 쓰시오.",a:"① HTTP  ② Hypertext  ③ HTML",h:"HTTP/하이퍼텍스트/HTML"},
+{q:"네트워크 관련 용어 중 ① 연결형 통신에서 출발지와 목적지의 전송 경로를 미리 연결하여 논리적으로 고정한 후 통신하는 방식, ② 비연결형 통신에서 사전에 접속 절차를 수행하지 않고 헤더에 경로 지정 정보를 붙여 개별적으로 전달하는 방식을 각각 쓰시오.",a:"① 가상 회선(Virtual Circuit)  ② 데이터그램(Datagram)",h:"가상회선/데이터그램"},
+{q:"인터넷 환경에서 MAC 주소를 이용하여 IP 주소를 찾는 인터넷 계층의 프로토콜로, 역순 주소 결정 프로토콜이라 불리는 것을 쓰시오.",a:"RARP(Reverse Address Resolution Protocol)",h:"MAC→IP 역방향"},
+{q:"TCP/IP 기반의 인터넷 통신 서비스에서 인터넷 프로토콜(IP)과 조합하여 통신 중에 발생하는 오류의 처리와 전송 경로의 변경 등을 위한 제어 메시지를 취급하는 무연결 전송용 프로토콜을 쓰시오.",a:"ICMP(Internet Control Message Protocol)",h:"오류 처리, 제어 메시지"},
+{q:"한 번의 로그인으로 개인이 가입한 모든 사이트를 이용할 수 있게 해주는 시스템을 쓰시오.",a:"SSO(Single Sign On)",h:"한번 로그인으로 모든 사이트"},
+{q:"재난 및 군사 현장과 같이 별도의 고정된 유선망을 구축할 수 없는 장소에서 모바일 호스트(Mobile Host)만을 이용하여 구성한 네트워크로, 멀티 홉 라우팅 기능을 지원하는 것을 쓰시오.",a:"애드 혹 네트워크(Ad-hoc Network)",h:"유선망 없는 임시 네트워크"},
+{q:"1개의 정식 IP 주소에 다량의 가상 사설 IP 주소를 할당 및 연결하는 방식으로, '네트워크 주소 변환'이라는 의미의 영문 3글자 약자를 쓰시오.",a:"NAT(Network Address Translation)",h:"네트워크 주소 변환"},
+{q:"URI(Uniform Resource Identifier)로 데이터를 식별하고 각 URI에 링크 정보를 부여함으로써 상호 연결된 웹을 지향하는 모형으로, Linked Data와 Open Data를 결합한 용어를 쓰시오.",a:"LOD(개방형 링크드 데이터, Linked Open Data)",h:"링크드 + 오픈 데이터"},
+{q:"경로 제어 프로토콜(Routing Protocol)에서 ① 자율 시스템 내부의 라우팅에 사용되는 프로토콜, ② 자율 시스템 간의 라우팅에 사용되는 프로토콜, ③ 대규모 자율 시스템에서 많이 사용되며 링크 상태를 실시간으로 반영하여 최단 경로로 라우팅을 지원하는 것, ④ ②의 단점을 보완하여 처음 연결 시 전체 라우팅 테이블을 교환하고 이후 변화된 정보만 교환하는 것을 각각 쓰시오.",a:"① IGP  ② EGP  ③ OSPF  ④ BGP",h:"IGP/EGP/OSPF/BGP"},
+{q:"P2P(Peer-to-Peer) 네트워크를 이용하여 온라인 금융 거래 정보를 온라인 네트워크 참여자(Peer)의 디지털 장비에 분산 저장하는 기술을 쓰시오.",a:"블록체인(Blockchain)",h:"분산 원장 기술"},
+{q:"정보 자산을 안전하게 보호하기 위한 보호 절차와 대책으로 정보보호 관리 체계라고 하며, 한국인터넷진흥원(KISA)에서 평가하고 인증하는 사업의 영문 약어를 쓰시오.",a:"ISMS(Information Security Management System)",h:"정보보호 관리 체계"},
+{q:"보안 기술 중 ① ARM(Advanced RISC Machine)에서 개발한 기술로 하나의 프로세서 내에 일반 구역(Normal World)과 보안 구역(Secure World)으로 분할하여 관리하는 하드웨어 기반의 보안 기술, ② 네티즌들이 사이트에 접속할 때 주소를 잘못 입력하거나 철자를 빠뜨리는 실수를 이용하기 위해 이와 유사한 유명 도메인을 미리 등록하는 것을 각각 쓰시오.",a:"① Trustzone  ② Typosquatting",h:"Trustzone/Typosquatting"},
+{q:"RAID 방식 중 패리티가 없는 스트라이핑된 2개 이상의 디스크를 병렬로 연결하여 구성하는 방식으로, 하나의 디스크만 손상되어도 전체 데이터가 유실되는 문제가 발생하는 레이드 레벨(Level)을 숫자로 쓰시오.",a:"Level 0",h:"스트라이핑, 패리티 없음"},
+{q:"오픈 소스 기반 분산 컴퓨팅 플랫폼으로, 일반 PC급 컴퓨터들로 가상화된 대형 스토리지를 형성하고 거대한 데이터 세트를 병렬로 처리할 수 있도록 개발되었으며, 구글의 맵리듀스(MapReduce) 엔진을 사용하는 것을 쓰시오.",a:"하둡(Hadoop)",h:"분산 컴퓨팅, MapReduce"},
+{q:"데이터 마이닝(Data Mining)의 개념을 간략히 서술하시오.",a:"데이터 마이닝은 대량의 데이터를 분석하여 데이터에 내재된 변수 사이의 상호관계를 규명하여 일정한 패턴을 찾아내는 기법이다.",h:"대량 데이터 패턴 발견"},
+{q:"데이터베이스 회복(Recovery) 기법 중 트랜잭션이 데이터를 변경하면 부분 완료되기 전이라도 즉시 실제 DB에 그 내용을 반영하는 기법을 쓰시오.",a:"즉각 갱신 기법(Immediate Update)",h:"즉시 DB에 반영"},
+{q:"데이터베이스의 병행제어(Concurrency Control) 기법 중 하나로, 접근한 데이터에 대한 연산을 모두 마칠 때까지 추가적인 접근을 제한함으로써 상호 배타적으로 접근하여 작업을 수행하도록 하는 기법을 쓰시오.",a:"로킹(Locking)",h:"상호 배타적 접근 제어"},
+{q:"릴리즈 노트 작성 시 릴리즈 노트 이름, 소프트웨어 이름, 릴리즈 버전, 릴리즈 날짜, 릴리즈 노트 날짜, 릴리즈 노트 버전 등이 포함된 항목을 쓰시오.",a:"머릿말(Header)",h:"기본 정보 포함 항목"},
+{q:"제시된 보기 중 형상 관리 도구에 해당하는 것을 3가지 고르시오. (CVS, OLAP, Ant, Maven, Git, Jenkins, SVN, Spring)",a:"CVS, Git, SVN",h:"버전 관리 도구"},
+{q:"소프트웨어 개발에서의 작업 중 형상 통제에 대해 간략히 서술하시오.",a:"형상 통제는 식별된 형상 항목에 대한 변경 요구를 검토하여 현재의 기준선이 잘 반영될 수 있도록 조정하는 작업이다.",h:"변경 요구 검토 및 조정"},
+{q:"소프트웨어 ( )는 소프트웨어 개발 단계의 각 과정에서 만들어지는 프로그램, 문서, 데이터 등을 관리하는 것으로, 이를 지원하는 도구로 Git, SVN 등이 있다. 괄호에 들어갈 용어를 쓰시오.",a:"형상관리(SCM, Software Configuration Management)",h:"개발 산출물 버전 관리"}
+];
+
+let mode='seq';
+let order=[...Array(QS.length).keys()];
+let wrongSet=new Set();
+let skippedSet=new Set();
+let correctCount=0;
+let wrongCount=0;
+let skipCount=0;
+let results={};
+let cur=0;
+let answered=false;
+let filteredOrder=[];
+
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  buildOrder();
+  cur=0;
+  render();
+}
+
+function buildOrder(){
+  if(mode==='seq') filteredOrder=[...Array(QS.length).keys()];
+  else if(mode==='rand'){
+    filteredOrder=[...Array(QS.length).keys()];
+    for(let i=filteredOrder.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [filteredOrder[i],filteredOrder[j]]=[filteredOrder[j],filteredOrder[i]];
+    }
+  } else {
+    filteredOrder=wrongSet.size>0?[...wrongSet]:[...Array(QS.length).keys()];
+    if(filteredOrder.length===0) filteredOrder=[...Array(QS.length).keys()];
+  }
+}
+
+function currentQIdx(){return filteredOrder[cur];}
+
+function render(){
+  if(filteredOrder.length===0) buildOrder();
+  const idx=currentQIdx();
+  const q=QS[idx];
+  answered=false;
+  const total=filteredOrder.length;
+  document.getElementById('stat-txt').textContent=`${cur+1} / ${total}`;
+  document.getElementById('prog').style.width=((cur+1)/total*100).toFixed(1)+'%';
+
+  const prevResult=results[idx];
+  
+  const html=`
+    <div class="q-card">
+      <div class="q-num">문제 ${idx+1}</div>
+      <div class="q-text">${q.q}</div>
+      <button class="hint-btn" onclick="toggleHint(this)">힌트 보기</button>
+      <div class="hint-text">${q.h}</div>
+      <div class="input-row">
+        <input class="ans-input" id="ans-inp" type="text" placeholder="답을 입력하세요..." onkeydown="if(event.key==='Enter')checkAns()">
+        <button class="check-btn" onclick="checkAns()">확인</button>
+      </div>
+      <div class="result-box" id="res-box"></div>
+      <div class="answer-text" id="ans-txt"></div>
+    </div>
+  `;
+  document.getElementById('q-container').innerHTML=html;
+  
+  if(prevResult){
+    answered=true;
+    showResult(prevResult==='correct',q.a,true);
+    document.getElementById('ans-inp').value='';
+  }
+  
+  updateScore();
+  setTimeout(()=>{const inp=document.getElementById('ans-inp');if(inp)inp.focus();},100);
+}
+
+function toggleHint(btn){
+  const ht=btn.nextElementSibling;
+  if(ht.style.display==='block'){ht.style.display='none';btn.textContent='힌트 보기';}
+  else{ht.style.display='block';btn.textContent='힌트 숨기기';}
+}
+
+function normalize(s){return s.replace(/[\s\(\)\[\]]/g,'').toLowerCase().replace(/[①②③④⑤]/g,'');}
+
+function checkAns(){
+  if(answered) return;
+  const idx=currentQIdx();
+  const q=QS[idx];
+  const inp=document.getElementById('ans-inp');
+  const val=inp.value.trim();
+  if(!val) return;
+  
+  const correct=normalize(val).includes(normalize(q.a.split('  ')[0].replace(/[①②③④⑤]/g,'').trim())) 
+    || normalize(q.a).includes(normalize(val))
+    || normalize(val)===normalize(q.a.split('  ')[0]);
+    
+  answered=true;
+  if(correct){
+    results[idx]='correct';
+    wrongSet.delete(idx);
+    correctCount++;
+  } else {
+    results[idx]='wrong';
+    wrongSet.add(idx);
+    wrongCount++;
+  }
+  showResult(correct,q.a,false);
+  updateScore();
+}
+
+function showResult(correct,ans,silent){
+  const box=document.getElementById('res-box');
+  const atxt=document.getElementById('ans-txt');
+  if(!box) return;
+  box.style.display='block';
+  box.className='result-box '+(correct?'correct':'wrong');
+  box.textContent=correct?'정답입니다!':'틀렸습니다.';
+  atxt.style.display='block';
+  atxt.innerHTML='<strong>정답:</strong> '+ans.replace(/  /g,'<br>');
+}
+
+function updateScore(){
+  document.getElementById('sc-correct').textContent=correctCount;
+  document.getElementById('sc-wrong').textContent=wrongCount;
+  document.getElementById('sc-skip').textContent=skipCount;
+}
+
+function go(dir){
+  cur+=dir;
+  if(cur<0) cur=filteredOrder.length-1;
+  if(cur>=filteredOrder.length) cur=0;
+  render();
+}
+
+function skipQ(){
+  const idx=currentQIdx();
+  skippedSet.add(idx);
+  skipCount++;
+  updateScore();
+  go(1);
+}
+
+function resetAll(){
+  results={};wrongSet=new Set();skippedSet=new Set();
+  correctCount=0;wrongCount=0;skipCount=0;cur=0;
+  buildOrder();render();
+}
+
+buildOrder();
+render();
+</script>
